@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Quote Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Dynamic Quote Generator</h1>
+  </header>
+
+  <main>
+    <section class="quote-display">
+      <h2>Quote of the Moment</h2>
+      <p id="quoteText">Loading quotes...</p>
+      <p id="quoteCategory"></p>
+      <button id="newQuoteBtn">New Quote</button>
+    </section>
+
+    <section class="controls">
+      <h3>Manage Quotes</h3>
+      <form id="quoteForm">
+        <input type="text" id="quoteInput" placeholder="Enter quote text" required />
+        <input type="text" id="categoryInput" placeholder="Enter category" required />
+        <button type="submit">Add Quote</button>
+      </form>
+
+      <div class="filter">
+        <label for="categoryFilter">Filter by category:</label>
+        <select id="categoryFilter">
+          <option value="all">All</option>
+        </select>
+      </div>
+
+      <div class="storage-buttons">
+        <button id="exportBtn">Export JSON</button>
+        <button id="importBtn">Import JSON</button>
+        <input type="file" id="importFile" accept="application/json" hidden />
+        <button id="clearBtn">Clear All Local</button>
+        <button id="syncBtn">Sync Now</button>
+      </div>
+    </section>
+
+    <section class="quotes-list">
+      <h3>All Quotes</h3>
+      <ul id="quoteList"></ul>
+    </section>
+  </main>
+
+  <div id="notification"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
