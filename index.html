@@ -1,56 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dynamic Quote Generator</title>
-  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="container">
-    <h1>Dynamic Quote Generator</h1>
+  <h1>Dynamic Quote Generator</h1>
+  <div id="quoteDisplay">Click "Show New Quote" to see a quote.</div>
 
-    <section id="controls" class="card">
-      <div class="row">
-        <select id="categoryFilter">
-          <option value="all">All Categories</option>
-        </select>
+  <button id="newQuote">Show New Quote</button>
 
-        <button id="newQuote">Show New Quote</button>
-        <button id="randomByCategory">Random from Category</button>
-      </div>
-
-      <div class="row">
-        <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-        <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-        <button id="addQuoteBtn">Add Quote</button>
-      </div>
-
-      <div class="row">
-        <button id="exportJson">Export JSON</button>
-        <input type="file" id="importFile" accept=".json" />
-        <button id="clearAll">Clear All (local)</button>
-      </div>
-
-      <div class="row">
-        <button id="syncBtn">Sync with Server (simulate)</button>
-        <label><input type="checkbox" id="autoSync" /> Auto-sync every 30s</label>
-      </div>
-    </section>
-
-    <section id="quoteCard" class="card">
-      <div id="quoteDisplay" class="quote">Click "Show New Quote" to begin.</div>
-      <div id="quoteMeta" class="meta"></div>
-      <div id="quoteActions" class="row"></div>
-    </section>
-
-    <section id="listCard" class="card">
-      <h2>All Quotes</h2>
-      <ul id="quotesList"></ul>
-    </section>
-
-    <div id="toast" class="toast" aria-live="polite"></div>
-  </main>
+  <h2>Add a New Quote</h2>
+  <input id="newQuoteText" type="text" placeholder="Enter a new quote">
+  <input id="newQuoteCategory" type="text" placeholder="Enter category">
+  <button id="addQuoteBtn">Add Quote</button>
 
   <script src="script.js"></script>
 </body>
