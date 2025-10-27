@@ -1,55 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dynamic Quote Generator</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
+  <main class="container">
     <h1>Dynamic Quote Generator</h1>
-  </header>
 
-  <main>
-    <section class="quote-display">
-      <h2>Quote of the Moment</h2>
-      <p id="quoteText">Loading quotes...</p>
-      <p id="quoteCategory"></p>
-      <button id="newQuoteBtn">New Quote</button>
-    </section>
-
-    <section class="controls">
-      <h3>Manage Quotes</h3>
-      <form id="quoteForm">
-        <input type="text" id="quoteInput" placeholder="Enter quote text" required />
-        <input type="text" id="categoryInput" placeholder="Enter category" required />
-        <button type="submit">Add Quote</button>
-      </form>
-
-      <div class="filter">
-        <label for="categoryFilter">Filter by category:</label>
+    <section id="controls" class="card">
+      <div class="row">
         <select id="categoryFilter">
-          <option value="all">All</option>
+          <option value="all">All Categories</option>
         </select>
+
+        <button id="newQuote">Show New Quote</button>
+        <button id="randomByCategory">Random from Category</button>
       </div>
 
-      <div class="storage-buttons">
-        <button id="exportBtn">Export JSON</button>
-        <button id="importBtn">Import JSON</button>
-        <input type="file" id="importFile" accept="application/json" hidden />
-        <button id="clearBtn">Clear All Local</button>
-        <button id="syncBtn">Sync Now</button>
+      <div class="row">
+        <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
+        <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
+        <button id="addQuoteBtn">Add Quote</button>
+      </div>
+
+      <div class="row">
+        <button id="exportJson">Export JSON</button>
+        <input type="file" id="importFile" accept=".json" />
+        <button id="clearAll">Clear All (local)</button>
+      </div>
+
+      <div class="row">
+        <button id="syncBtn">Sync with Server (simulate)</button>
+        <label><input type="checkbox" id="autoSync" /> Auto-sync every 30s</label>
       </div>
     </section>
 
-    <section class="quotes-list">
-      <h3>All Quotes</h3>
-      <ul id="quoteList"></ul>
+    <section id="quoteCard" class="card">
+      <div id="quoteDisplay" class="quote">Click "Show New Quote" to begin.</div>
+      <div id="quoteMeta" class="meta"></div>
+      <div id="quoteActions" class="row"></div>
     </section>
+
+    <section id="listCard" class="card">
+      <h2>All Quotes</h2>
+      <ul id="quotesList"></ul>
+    </section>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
   </main>
-
-  <div id="notification"></div>
 
   <script src="script.js"></script>
 </body>
