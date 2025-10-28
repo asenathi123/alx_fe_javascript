@@ -1,41 +1,63 @@
-// 1️⃣ Quotes array
+// DOM elements
+const quoteDisplay = document.getElementById('quoteDisplay');
+const newQuoteBtn = document.getElementById('newQuote');
+const addQuoteBtn = document.getElementById('addQuoteBtn');
+const newQuoteText = document.getElementById('newQuoteText');
+const newQuoteCategory = document.getElementById('newQuoteCategory');
+
+// Initial quotes array
 let quotes = [
   { text: "The only way to do great work is to love what you do.", category: "Motivation" },
-  { text: "Simplicity is the soul of efficiency.", category: "Philosophy" },
-  { text: "Code is like humor. When you have to explain it, it’s bad.", category: "Programming" }
+  { text: "In the middle of every difficulty lies opportunity.", category: "Inspiration" },
+  { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", category: "Perseverance" },
+  { text: "Creativity is intelligence having fun.", category: "Creativity" }
 ];
 
-// 2️⃣ Function to display a random quote
+// Function to show a random quote
 function showRandomQuote() {
-  if (quotes.length === 0) {
-    document.getElementById('quoteDisplay').textContent = "No quotes available.";
-    return;
-  }
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const quote = quotes[randomIndex];
-  document.getElementById('quoteDisplay').textContent = `"${quote.text}" — ${quote.category}`;
+
+  // Clear display and create elements dynamically
+  quoteDisplay.innerHTML = '';
+
+  const quoteText = document.createElement('p');
+  quoteText.textContent = `"${quote.text}"`;
+
+  const quoteCategory = document.createElement('span');
+  quoteCategory.className = 'category';
+  quoteCategory.textContent = ` – ${quote.category}`;
+
+  quoteDisplay.appendChild(quoteText);
+  quoteDisplay.appendChild(quoteCategory);
 }
 
-// 3️⃣ Function to add a new quote
+// Function to add a new quote
 function addQuote() {
-  const text = document.getElementById('newQuoteText').value.trim();
-  const category = document.getElementById('newQuoteCategory').value.trim();
+  const text = newQuoteText.value.trim();
+  const category = newQuoteCategory.value.trim();
 
   if (!text || !category) {
-    alert("Both quote text and category are required.");
+    alert("Please fill out both fields before adding a quote.");
     return;
   }
 
-  quotes.push({ text, category });
-  document.getElementById('newQuoteText').value = '';
-  document.getElementById('newQuoteCategory').value = '';
-  showRandomQuote(); // Show the newly added quote
+  const newQuote = { text, category };
+  quotes.push(newQuote);
+
+  newQuoteText.value = '';
+  newQuoteCategory.value = '';
+
+  const confirmation = document.createElement('p');
+  confirmation.textContent = "✅ New quote added successfully!";
+  confirmation.style.color = 'green';
+
+  quoteDisplay.innerHTML = '';
+  quoteDisplay.appendChild(confirmation);
+
+  setTimeout(() => showRandomQuote(), 1500);
 }
 
-// 4️⃣ Event listeners
-document.getElementById('newQuote').addEventListener('click', showRandomQuote);
-document.getElementById('addQuoteBtn').addEventListener('click', addQuote);
-
-// Optional: show a random quote on page load
-showRandomQuote();
-
+// Event listeners
+newQuoteBtn.addEventListener('click', showRandomQuote);
+addQuoteBtn.addEventListener('click', addQuote);
