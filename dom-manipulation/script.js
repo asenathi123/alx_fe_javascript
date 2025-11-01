@@ -79,7 +79,10 @@ function showRandomQuote() {
 // Create and attach the Add Quote form dynamically
 function createAddQuoteForm() {
   const container = document.getElementById('addQuoteFormContainer');
-  container.innerHTML = ''; // reset
+  // Clear container using DOM methods instead of innerHTML
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
 
   const form = document.createElement('div');
 
@@ -135,8 +138,12 @@ function addQuote() {
   // Update categories (handles new categories automatically)
   populateCategoryOptions();
   
-  // Set selector to the new category and display the quote
-  document.getElementById('categorySelect').value = category;
+  // Set selector to the new category if it exists, and display the quote
+  const categorySelect = document.getElementById('categorySelect');
+  const categories = getCategories();
+  if (categories.includes(category)) {
+    categorySelect.value = category;
+  }
   showRandomQuote();
 }
 
