@@ -47,6 +47,9 @@ function saveQuotes() {
 // Quotes array initialized from localStorage or defaults
 let quotes = loadQuotes();
 
+// Animation duration constant
+const FADE_DURATION_MS = 500;
+
 // Utility: get unique categories from quotes
 function getCategories() {
   const set = new Set(quotes.map(q => q.category));
@@ -83,13 +86,16 @@ function showRandomQuote() {
 
   // Handle empty pool
   if (pool.length === 0) {
+    quoteDisplay.classList.remove('fade-in');
     quoteDisplay.classList.add('fade-out');
     setTimeout(() => {
       displayText.textContent = 'No quotes available for this category.';
       displayCategory.textContent = '';
       quoteDisplay.classList.remove('fade-out');
       quoteDisplay.classList.add('fade-in');
-    }, 500);
+      // Remove fade-in class after animation completes
+      setTimeout(() => quoteDisplay.classList.remove('fade-in'), FADE_DURATION_MS);
+    }, FADE_DURATION_MS);
     return;
   }
 
@@ -98,6 +104,7 @@ function showRandomQuote() {
   const q = pool[idx];
 
   // Fade out, update content, fade in
+  quoteDisplay.classList.remove('fade-in');
   quoteDisplay.classList.add('fade-out');
   
   setTimeout(() => {
@@ -105,7 +112,9 @@ function showRandomQuote() {
     displayCategory.textContent = `Category: ${q.category}`;
     quoteDisplay.classList.remove('fade-out');
     quoteDisplay.classList.add('fade-in');
-  }, 500);
+    // Remove fade-in class after animation completes
+    setTimeout(() => quoteDisplay.classList.remove('fade-in'), FADE_DURATION_MS);
+  }, FADE_DURATION_MS);
 }
 
 // Create and attach the Add Quote form dynamically
