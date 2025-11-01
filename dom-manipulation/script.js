@@ -1,10 +1,31 @@
-// Quotes array with some initial quotes
-const quotes = [
-  { text: "The best way to predict the future is to invent it.", category: "inspiration" },
+/*
+  Dynamic Quote Generator - script.js
+  
+  This script implements a dynamic quote generator with advanced DOM manipulation features:
+  - Maintains an array of quote objects with text and category
+  - Displays random quotes from selected category with fade animations
+  - Dynamically creates and manages add-quote form
+  - Persists quotes to localStorage for data persistence across page reloads
+  - Handles category filtering and updates category selector dynamically
+  - Uses event listeners (no inline onclick attributes)
+  - Creates/modifies DOM elements programmatically
+  - Validates input and handles edge cases (empty input, duplicate categories)
+*/
+
+// Load quotes from localStorage or use default initial quotes
+let quotes = JSON.parse(localStorage.getItem('quotes')) || [
+  { text: "The best way to predict the future is to invent it.", category: "inspirational" },
   { text: "Life is what happens when you're busy making other plans.", category: "life" },
-  { text: "If you want something done right, do it yourself.", category: "advice" },
-  { text: "Simplicity is the soul of efficiency.", category: "productivity" }
+  { text: "Keep smiling, because life is a beautiful thing and there's so much to smile about.", category: "inspirational" },
+  { text: "Why do programmers prefer dark mode? Because light attracts bugs!", category: "humor" },
+  { text: "I'm not lazy, I'm just on energy-saving mode.", category: "humor" },
+  { text: "The purpose of our lives is to be happy.", category: "life" }
 ];
+
+// Save quotes to localStorage
+function saveQuotes() {
+  localStorage.setItem('quotes', JSON.stringify(quotes));
+}
 
 // Utility: get unique categories from quotes
 function getCategories() {
@@ -12,8 +33,8 @@ function getCategories() {
   return Array.from(set).sort();
 }
 
-// Populate category select
-function populateCategories() {
+// Populate category select - renamed to match requirements
+function populateCategoryOptions() {
   const select = document.getElementById('categorySelect');
   // remove all except 'all'
   select.querySelectorAll('option:not([value="all"])').forEach(o => o.remove());
@@ -25,11 +46,12 @@ function populateCategories() {
   });
 }
 
-// Show a random quote based on selected category
+// Show a random quote based on selected category with fade animation
 function showRandomQuote() {
   const select = document.getElementById('categorySelect');
   const chosen = select.value;
   const pool = chosen === 'all' ? quotes : quotes.filter(q => q.category === chosen);
+  const quoteDisplay = document.getElementById('quoteDisplay');
   const displayText = document.getElementById('quoteText');
   const displayCategory = document.getElementById('quoteCategory');
 
@@ -39,10 +61,19 @@ function showRandomQuote() {
     return;
   }
 
-  const idx = Math.floor(Math.random() * pool.length);
-  const q = pool[idx];
-  displayText.textContent = `"${q.text}"`;
-  displayCategory.textContent = `Category: ${q.category}`;
+  // Fade out animation
+  quoteDisplay.style.opacity = '0';
+  
+  setTimeout(() => {
+    // Select and display random quote
+    const idx = Math.floor(Math.random() * pool.length);
+    const q = pool[idx];
+    displayText.textContent = `"${q.text}"`;
+    displayCategory.textContent = `Category: ${q.category}`;
+    
+    // Fade in animation
+    quoteDisplay.style.opacity = '1';
+  }, 500);
 }
 
 // Create and attach the Add Quote form dynamically
@@ -81,6 +112,7 @@ function addQuote() {
   const text = textEl.value.trim();
   const category = catEl.value.trim().toLowerCase();
 
+  // Validate input
   if (!text) {
     alert('Please enter a quote.');
     return;
@@ -90,21 +122,40 @@ function addQuote() {
     return;
   }
 
+  // Add quote to array
   quotes.push({ text, category });
+  
+  // Save to localStorage
+  saveQuotes();
+  
+  // Clear input fields
   textEl.value = '';
   catEl.value = '';
 
-  // update categories and show the newly added quote
-  populateCategories();
+  // Update categories (handles new categories automatically)
+  populateCategoryOptions();
+  
+  // Set selector to the new category and display the quote
   document.getElementById('categorySelect').value = category;
   showRandomQuote();
 }
 
 // Init function to wire up events
 function init() {
-  populateCategories();
+  populateCategoryOptions();
   createAddQuoteForm();
   document.getElementById('newQuote').addEventListener('click', showRandomQuote);
+  
+  // Load last selected category from localStorage if available
+  const lastCategory = localStorage.getItem('lastCategory');
+  if (lastCategory) {
+    document.getElementById('categorySelect').value = lastCategory;
+  }
+  
+  // Save category selection to localStorage when changed
+  document.getElementById('categorySelect').addEventListener('change', function() {
+    localStorage.setItem('lastCategory', this.value);
+  });
 }
 
 // Run init when DOM is ready
