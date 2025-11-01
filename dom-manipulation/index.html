@@ -1,3 +1,17 @@
+<!--
+  Dynamic Quote Generator - index.html
+  
+  This HTML file provides the structure for a dynamic quote generator web application.
+  It includes:
+  - A heading and quote display area for showing random quotes
+  - A category selector dropdown for filtering quotes by category
+  - A "Show New Quote" button to display random quotes
+  - A dynamically created form section for adding new quotes and categories
+  - Links to script.js for DOM manipulation and application logic
+  
+  The page uses vanilla JavaScript with advanced DOM manipulation techniques
+  to create, modify, and update elements dynamically without page reloads.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +20,15 @@
   <title>Dynamic Quote Generator</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 2rem; }
-    #quoteDisplay { margin: 1rem 0; padding: 1rem; border: 1px solid #ccc; background: #f9f9f9; }
+    #quoteDisplay { 
+      margin: 1rem 0; 
+      padding: 1rem; 
+      border: 1px solid #ccc; 
+      background: #f9f9f9;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .fade-out { opacity: 0; }
+    .fade-in { opacity: 1; }
     .meta { color: #666; font-size: 0.9rem; }
     .controls { margin-top: 1rem; }
     .category-list { margin-top: 0.5rem; }
